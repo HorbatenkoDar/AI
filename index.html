@@ -68,7 +68,50 @@
     <li class="folder"><a href="resources/videos/">Відео</a></li>
     <li><a href="resources/interactive.js">Інтерактив</a></li>
   </ul>
+<p>
+    <button id="interactive-toggle">Інтерактиви</button>
+  </p>
 
+  <!-- місце для компонента -->
+  <div id="interactive-container"></div>
+
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- interactive.js (лише після React/ReactDOM) -->
+  <script src="resources/interactive.js"></script>
+
+  <script>
+    // Кнопка відкриває/ховає контейнер і монтує інтерактив один раз.
+    (function(){
+      const btn = document.getElementById('interactive-toggle');
+      const container = document.getElementById('interactive-container');
+      let mounted = false;
+      btn.addEventListener('click', function(){
+        if (!mounted) {
+          container.style.display = 'block';
+          if (window.mountInteractive) {
+            window.mountInteractive('interactive-container');
+            mounted = true;
+            btn.textContent = 'Приховати інтерактиви';
+          } else {
+            console.error('mountInteractive not found. Did you include resources/interactive.js?');
+            alert('Помилка: interactive.js не завантажено.');
+          }
+        } else {
+          if (container.style.display === 'none' || container.style.display === '') {
+            container.style.display = 'block';
+            btn.textContent = 'Приховати інтерактиви';
+          } else {
+            container.style.display = 'none';
+            btn.textContent = 'Інтерактиви';
+          }
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
+
 
